@@ -1,0 +1,7 @@
+{
+  "name": "torshavnSPA",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
