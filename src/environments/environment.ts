@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   serverURL: 'http://localhost:8080/api',
   whitelistedDomains: ['localhost:8080'],
-  googleMapsApiKey: 'AIzaSyCEroEM0m4QzyhQcqeK2GvCc0qDlCIzcAA'
+  googleMapsApiKey: ''
 };
 
 /*
