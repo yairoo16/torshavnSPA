@@ -12,15 +12,22 @@ import { AppRoutingModule } from './app-routing.module';
 import { CommonModule } from '@angular/common';
 import {JwtModule} from '@auth0/angular-jwt';
 import { environment } from 'src/environments/environment';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { LocationPickerComponent } from './shared/pickers/location-picker/location-picker.component';
+import { MapModalComponent } from './shared/pickers/map-modal/map-modal.component';
 
 export function tokenGetter() {
   return localStorage.getItem('jwt_token');
 }
 
 @NgModule({
-  declarations: [AppComponent],
-  entryComponents: [],
+  declarations: [
+    AppComponent,
+    MapModalComponent
+  ],
+  entryComponents: [
+    MapModalComponent
+  ],
   imports: [BrowserModule,
     CommonModule,
     HttpClientModule,
@@ -33,7 +40,8 @@ export function tokenGetter() {
         whitelistedDomains: environment.whitelistedDomains
       }
     }),
-    AppRoutingModule],
+    AppRoutingModule,
+    ReactiveFormsModule],
   providers: [
     StatusBar,
     SplashScreen,
