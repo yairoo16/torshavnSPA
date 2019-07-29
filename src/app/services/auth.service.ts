@@ -27,7 +27,10 @@ export class AuthService {
 
   login(values: any): Observable<string> {
     return this.httpClient.post(`${environment.serverURL}/login`, values, {responseType: 'text'})
-      .pipe(tap(jwt => this.handleJwtResponse(jwt)));
+      .pipe(tap(jwt => {
+        this.handleJwtResponse(jwt);
+      }
+    ));
   }
 
   logout() {
@@ -48,7 +51,10 @@ export class AuthService {
   }
 
   private handleJwtResponse(jwt: string): string {
-    localStorage.setItem(this.jwtTokenName, jwt);
+    const jwtObject = JSON.parse(jwt);
+    const tokenValue = jwtObject['token'];
+
+    localStorage.setItem(this.jwtTokenName, tokenValue);
     this.authUser.next(jwt);
 
     return jwt;

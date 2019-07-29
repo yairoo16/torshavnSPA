@@ -13,6 +13,10 @@ export class AppComponent implements OnInit, OnDestroy {
 
   pages = [
     {
+      title: 'Home',
+      url: '/home'
+    },
+    {
       title: 'First Page',
       url: '/first'
     },
