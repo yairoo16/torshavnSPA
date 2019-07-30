@@ -7,5 +7,9 @@
     </ion-toolbar>
 </ion-header>
 <ion-content padding>
-    WELCOME To your Torshavn travel guide. Another home test
+    <agm-map [latitude]="latitude" [longitude]="longitude" (mapClick)="onChoseLocation($event)">
+        <!-- <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker> -->
+        <agm-marker *ngFor="let p of pointsOfInterest" [latitude]="p.lat"
+        [longitude]="p.lng"></agm-marker>
+    </agm-map> 
 </ion-content>

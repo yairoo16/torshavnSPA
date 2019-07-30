@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { AgmCoreModule} from '@agm/core';
+
 
 import { HomePage } from './home.page';
 
@@ -11,6 +13,9 @@ import { HomePage } from './home.page';
     CommonModule,
     FormsModule,
     IonicModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyCEroEM0m4QzyhQcqeK2GvCc0qDlCIzcAA'
+    }),
     RouterModule.forChild([
       {
         path: '',
