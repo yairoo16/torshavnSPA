@@ -1,17 +1,21 @@
-.map {
-    position: absolute;
-    height: 50%;
-    width: 100%;
+// .map {
+//     position: absolute;
+//     height: 50%;
+//     width: 100%;
 
-    background-color: transparent;
-    opacity: 0;
-    transition: opacity 150ms ease-in;
-}
+//     background-color: transparent;
+//     opacity: 0;
+//     transition: opacity 150ms ease-in;
+// }
 
-.map.visible {
-    opacity: 1;
-}
+// .map.visible {
+//     opacity: 1;
+// }
 
 agm-map {
-    height: 400px;
+    height: 300px;
+}
+
+agm-marker {
+    height: 5px;
 }

@@ -10,7 +10,8 @@ export class HomePage implements OnInit {
 
   latitude = 62.009;
   longitude = -6.771;
-  markers = [];
+  zoom = 15;
+  path = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
 
   pointsOfInterest: Array<Coordinates> = [
     {lat: 62.006847, lng: -6.778328},
@@ -18,7 +19,6 @@ export class HomePage implements OnInit {
     {lat: 62.0057391, lng: -6.7817612}
   ];
 
-  // form: FormGroup;
   constructor() {
 
     // this.authService.authUserObservable.subscribe(jwt => {

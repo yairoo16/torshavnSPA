@@ -7,9 +7,11 @@
     </ion-toolbar>
 </ion-header>
 <ion-content padding>
-    <agm-map [latitude]="latitude" [longitude]="longitude" (mapClick)="onChoseLocation($event)">
+    <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" (mapClick)="onChoseLocation($event)">
         <!-- <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker> -->
-        <agm-marker *ngFor="let p of pointsOfInterest" [latitude]="p.lat"
-        [longitude]="p.lng"></agm-marker>
+        <agm-marker *ngFor="let p of pointsOfInterest" 
+        [latitude]="p.lat"
+        [longitude]="p.lng" 
+        [iconUrl]="path"></agm-marker>
     </agm-map> 
 </ion-content>
