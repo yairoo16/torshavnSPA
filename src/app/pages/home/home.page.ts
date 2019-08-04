@@ -1,5 +1,8 @@
 import { Component, OnInit} from '@angular/core';
 import { Coordinates } from 'src/app/models/location';
+import { Marker } from 'src/app/models/marker';
+import { environment } from 'src/environments/environment';
+import { MarkerService } from 'src/app/services/marker.service';
 
 @Component({
   selector: 'app-home',
@@ -8,40 +11,35 @@ import { Coordinates } from 'src/app/models/location';
 })
 export class HomePage implements OnInit {
 
+  s3BaseImageUrl = environment.s3Url + 'images/';
   latitude = 62.009;
   longitude = -6.771;
   zoom = 15;
-  path = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
 
-  pointsOfInterest: Array<Coordinates> = [
-    {lat: 62.006847, lng: -6.778328},
-    {lat: 62.0065247, lng: -6.7847653},
-    {lat: 62.0057391, lng: -6.7817612}
-  ];
+  pointsOfInterest: Marker[];
+  selectedPointOfInterest: Marker;
 
-  constructor() {
-
-    // this.authService.authUserObservable.subscribe(jwt => {
-    //   if (jwt) {
-    //     const decoded = jwtHelper.decodeToken(jwt);
-    //     this.user = decoded.sub;
-    //   } else {
-    //     this.user = null;
-    //   }
-    // });
+  constructor(private markerService: MarkerService) {
 
   }
 
   ngOnInit(): void {
+    this.populateMarkers();
+  }
 
-    // this.form = new FormGroup({
-    //   location: new FormControl(null, {validators: [Validators.required]})
-    // });
+  populateMarkers() {
+    this.markerService.getMarkers().subscribe(m => {
+      this.pointsOfInterest = m;
+    });
   }
 
   onChoseLocation(event) {
     this.latitude = event.coords.lat;
     this.longitude = event.coords.lng;
+  }
+
+  clickedMarker(label: string, index: number) {
+    console.log(`clicked the marker: ${label || index}`);
   }
 
 

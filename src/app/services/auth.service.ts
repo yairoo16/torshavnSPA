@@ -25,6 +25,10 @@ export class AuthService {
     return !this.jwtHelper.isTokenExpired(token);
   }
 
+  get token() {
+    return localStorage.getItem('jtw_token');
+  }
+
   login(values: any): Observable<string> {
     return this.httpClient.post(`${environment.serverURL}/login`, values, {responseType: 'text'})
       .pipe(tap(jwt => {
@@ -58,5 +62,5 @@ export class AuthService {
     this.authUser.next(jwt);
 
     return jwt;
-}
+  }
 }
