@@ -10,12 +10,12 @@
     <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" (mapClick)="onChoseLocation($event)">
         <!-- <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker> -->
         <agm-marker *ngFor="let p of pointsOfInterest; let i = index" [animation]="p.animation" [latitude]="p.lat"
-            [longitude]="p.lng" [iconUrl]="p.iconPath" (markerClick)="clickedMarker(p.label, i)"></agm-marker>
+            [longitude]="p.lng" [iconUrl]="p.iconPath" (markerClick)="clickedMarker(p)"></agm-marker>
     </agm-map>
-    <!-- <ion-grid>
-        <ion-row>
+    <ion-grid *ngIf="selectedPointOfInterest !== undefined">
+        <ion-row >
             <ion-col size-sm="6" offset-sm="3" no-padding>
-                <ion-img [src]="{{s3BaseImageUrl + selectedPointOfInterest.imagePath}}"></ion-img>
+                <ion-img [src]="s3BaseImageUrl + selectedPointOfInterest.imagePath"></ion-img>
             </ion-col>
         </ion-row>
         <ion-row>
@@ -23,6 +23,6 @@
                 <p>{{selectedPointOfInterest.description}}</p>
             </ion-col>
         </ion-row>
-    </ion-grid> -->
+    </ion-grid>
 
 </ion-content>

@@ -4,10 +4,10 @@
 
 export const environment = {
   production: false,
-  serverURL: 'http://localhost:8080/api',
+  serverURL: 'http://localhost:8080/api/',
   whitelistedDomains: ['localhost:8080'],
   googleMapsApiKey: 'AIzaSyCEroEM0m4QzyhQcqeK2GvCc0qDlCIzcAA',
-  s3Url: 'https://s3.amazonaws.com/benobo-music/'
+  s3Url: 'https://s3.amazonaws.com/images/torshavn-maps/'
 };
 
 /*

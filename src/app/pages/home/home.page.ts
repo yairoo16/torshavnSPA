@@ -11,7 +11,7 @@ import { MarkerService } from 'src/app/services/marker.service';
 })
 export class HomePage implements OnInit {
 
-  s3BaseImageUrl = environment.s3Url + 'images/';
+  s3BaseImageUrl = environment.s3Url;
   latitude = 62.009;
   longitude = -6.771;
   zoom = 15;
@@ -38,8 +38,9 @@ export class HomePage implements OnInit {
     this.longitude = event.coords.lng;
   }
 
-  clickedMarker(label: string, index: number) {
-    console.log(`clicked the marker: ${label || index}`);
+  clickedMarker(marker: Marker) {
+    console.log(`clicked the marker: ${marker.label || marker.description}`);
+    this.selectedPointOfInterest = marker;
   }
 
 
