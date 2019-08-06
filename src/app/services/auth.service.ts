@@ -30,7 +30,7 @@ export class AuthService {
   }
 
   login(values: any): Observable<string> {
-    return this.httpClient.post(`${environment.serverURL}/login`, values, {responseType: 'text'})
+    return this.httpClient.post(`${environment.serverURL}login`, values, {responseType: 'text'})
       .pipe(tap(jwt => {
         this.handleJwtResponse(jwt);
       }
@@ -45,7 +45,7 @@ export class AuthService {
 
   signup(values: any) {
     // return this.httpClient.post(`${environment.serverURL}/register`, values);
-    return this.httpClient.post(`${environment.serverURL}/register`, values, {responseType: 'text'})
+    return this.httpClient.post(`${environment.serverURL}register`, values, {responseType: 'text'})
       .pipe(tap(jwt => {
         if (jwt !== 'EXISTS') {
           return this.handleJwtResponse(jwt);

@@ -7,7 +7,7 @@ export const environment = {
   serverURL: 'http://localhost:8080/api/',
   whitelistedDomains: ['localhost:8080'],
   googleMapsApiKey: 'AIzaSyCEroEM0m4QzyhQcqeK2GvCc0qDlCIzcAA',
-  s3Url: 'https://s3.amazonaws.com/images/torshavn-maps/'
+  s3Url: 'https://torhavn-maps.s3.us-east-2.amazonaws.com/images/'
 };
 
 /*
