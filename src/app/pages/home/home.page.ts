@@ -12,8 +12,8 @@ import { MarkerService } from 'src/app/services/marker.service';
 export class HomePage implements OnInit {
 
   s3BaseImageUrl = environment.s3Url;
-  latitude = 62.009;
-  longitude = -6.771;
+  latitude: number;
+  longitude: number;
   zoom = 15;
 
   pointsOfInterest: Marker[];
@@ -25,6 +25,7 @@ export class HomePage implements OnInit {
 
   ngOnInit(): void {
     this.populateMarkers();
+    this.getCurrentLocation();
   }
 
   populateMarkers() {
@@ -43,5 +44,13 @@ export class HomePage implements OnInit {
     this.selectedPointOfInterest = marker;
   }
 
+  getCurrentLocation() {
+    if (navigator) {
+      navigator.geolocation.getCurrentPosition( pos => {
+        this.longitude = +pos.coords.longitude;
+        this.latitude = +pos.coords.latitude;
+      });
+    }
+  }
 
 }
