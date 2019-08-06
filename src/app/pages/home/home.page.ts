@@ -3,6 +3,7 @@ import { Coordinates } from 'src/app/models/location';
 import { Marker } from 'src/app/models/marker';
 import { environment } from 'src/environments/environment';
 import { MarkerService } from 'src/app/services/marker.service';
+import { GeoLocationService } from 'src/app/services/geo-location.service';
 
 @Component({
   selector: 'app-home',
@@ -19,7 +20,7 @@ export class HomePage implements OnInit {
   pointsOfInterest: Marker[];
   selectedPointOfInterest: Marker;
 
-  constructor(private markerService: MarkerService) {
+  constructor(private markerService: MarkerService, private geoLocationService: GeoLocationService) {
 
   }
 
@@ -45,12 +46,18 @@ export class HomePage implements OnInit {
   }
 
   getCurrentLocation() {
-    if (navigator) {
-      navigator.geolocation.getCurrentPosition( pos => {
-        this.longitude = +pos.coords.longitude;
-        this.latitude = +pos.coords.latitude;
-      });
-    }
+    // if (navigator) {
+    //   navigator.geolocation.getCurrentPosition( pos => {
+    //     this.longitude = +pos.coords.longitude;
+    //     this.latitude = +pos.coords.latitude;
+    //   });
+    // }
+    this.geoLocationService.getPosition().subscribe(
+      (pos: Position) => {
+        this.latitude = +(pos.coords.latitude);
+        this.longitude = +(pos.coords.longitude);
+      }
+    );
   }
 
 }
