@@ -37,8 +37,7 @@ export function tokenGetter() {
     JwtModule.forRoot({
       config: {
         // tslint:disable-next-line: object-literal-shorthand
-        tokenGetter: tokenGetter,
-        whitelistedDomains: environment.whitelistedDomains
+        tokenGetter: tokenGetter
       }
     }),
     AppRoutingModule,
