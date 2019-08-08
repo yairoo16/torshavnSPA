@@ -43,7 +43,7 @@ export class AuthService {
     this.navCtrl.navigateRoot('login', {replaceUrl: true});
   }
 
-  signup(values: any) {
+  signup(values: any): Observable<string> {
     // return this.httpClient.post(`${environment.serverURL}/register`, values);
     return this.httpClient.post(`${environment.serverURL}register`, values, {responseType: 'text'})
       .pipe(tap(jwt => {

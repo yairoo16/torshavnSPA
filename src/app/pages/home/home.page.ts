@@ -13,8 +13,10 @@ import { GeoLocationService } from 'src/app/services/geo-location.service';
 export class HomePage implements OnInit {
 
   s3BaseImageUrl = environment.s3Url;
-  latitude: number;
-  longitude: number;
+  currentLat: number;
+  currentLng: number;
+  origin: any;
+  directions: any[] = [];
   zoom = 15;
 
   pointsOfInterest: Marker[];
@@ -35,10 +37,10 @@ export class HomePage implements OnInit {
     });
   }
 
-  onChoseLocation(event) {
-    this.latitude = event.coords.lat;
-    this.longitude = event.coords.lng;
-  }
+  // onChoseLocation(event) {
+  //   this.currentLat = event.coords.lat;
+  //   this.currentLng = event.coords.lng;
+  // }
 
   clickedMarker(marker: Marker) {
     console.log(`clicked the marker: ${marker.label || marker.description}`);
@@ -54,10 +56,29 @@ export class HomePage implements OnInit {
     // }
     this.geoLocationService.getPosition().subscribe(
       (pos: Position) => {
-        this.latitude = +(pos.coords.latitude);
-        this.longitude = +(pos.coords.longitude);
+        this.currentLat = +(pos.coords.latitude);
+        this.currentLng = +(pos.coords.longitude);
+        console.log(this.currentLat, this.currentLng);
       }
     );
+  }
+
+  getRoute(event) {
+    if (this.directions.length === 0) {
+      this.directions.push({
+        origin: { lat: this.currentLat, lng: this.currentLng },
+        destination: { lat: event.coords.lat, lng: event.coords.lng },
+        renderOptions: { polylineOptions: { strokeColor: '#f00' } },
+      });
+    } else {
+      const lat = this.directions[this.directions.length - 1].destination.lat;
+      const lng = this.directions[this.directions.length - 1].destination.lng;
+      this.directions.push({
+        origin: { lat: lat, lng: lng },
+        destination: { lat: event.coords.lat, lng: event.coords.lng },
+        renderOptions: { polylineOptions: { strokeColor: '#f00' } },
+      });
+    }
   }
 
 }

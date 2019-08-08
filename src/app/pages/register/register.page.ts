@@ -35,8 +35,13 @@ export class RegisterPage implements OnInit {
       .signup(value)
       .pipe(finalize(() => loading.dismiss()))
       .subscribe(
-        jwt => this.showSuccesToast(jwt),
+        jwt => {
+          this.navCtrl.navigateRoot(['home'], { replaceUrl: true });
+          this.showSuccesToast(jwt);
+        },
         err => this.handleError(err));
+        // jwt => this.showSuccesToast(jwt),
+        // err => this.handleError(err));
   }
 
   async handleError(error: any) {
