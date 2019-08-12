@@ -1,4 +1,4 @@
-package io.ionic.starter;
+package com.orellanab.torshavn_guide;
 
 import android.os.Bundle;
 

@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">TorshavnGuide</string>
-    <string name="title_activity_main">TorshavnGuide</string>
+    <string name="app_name">torshavnGuide</string>
+    <string name="title_activity_main">torshavnGuide</string>
     <string name="package_name">com.orellanab.torshavn_guide</string>
-    <string name="fileprovider_authority">com.orellanab.torshavn_guide</string>
+    <string name="fileprovider_authority">com.orellanab.torshavn_guide.fileprovider</string>
     <string name="custom_url_scheme">com.orellanab.torshavn_guide</string>
 </resources>
