@@ -11,9 +11,18 @@ export class GeoLocationService {
   public getPosition(): Observable<Position> {
     return new Observable<Position>(
       (observer) => {
-      navigator.geolocation.watchPosition((pos: Position) => {
-        observer.next(pos);
-      });
+      navigator.geolocation.watchPosition(
+        (pos: Position) => {
+          observer.next(pos);
+        },
+        (error) => {
+          observer.next(null);
+        },
+        {
+          enableHighAccuracy: true,
+          // timeout: 5000
+        }
+      );
     });
   }
 }

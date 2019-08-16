@@ -58,7 +58,7 @@ export class HomePage implements OnInit {
       (pos: Position) => {
         this.currentLat = +(pos.coords.latitude);
         this.currentLng = +(pos.coords.longitude);
-        console.log(this.currentLat, this.currentLng);
+        console.log('Lat:' + this.currentLat + ' Long:' + this.currentLng + ' accuracy: ' + pos.coords.accuracy );
       }
     );
   }

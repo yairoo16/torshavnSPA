@@ -19,12 +19,12 @@ export class AuthGuard implements CanActivate  {
                 }
 
                 // this.notificationService.addNotification(new Notification(NotificationType.error, 'You must be logged in', ''));
-                this.alertCtrl.create({
-                  header: 'Authentication failed',
-                  message: 'You must be logged in for that!',
-                  buttons: ['Okay']
-                })
-                .then(alertEl => alertEl.present());
+                // this.alertCtrl.create({
+                //   header: 'Authentication failed',
+                //   message: 'You must be logged in for that!',
+                //   buttons: ['Okay']
+                // })
+                // .then(alertEl => alertEl.present());
                 this.router.navigate(['/login']);
                 return false;
   }
