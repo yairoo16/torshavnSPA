@@ -7,11 +7,14 @@
     </ion-toolbar>
 </ion-header>
 <ion-content padding>
-    <agm-map [latitude]="currentLat" [longitude]="currentLng" [zoom]="zoom" (mapClick)="getRoute($event)">
-        <!-- <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker> -->
+    <agm-map [latitude]="currentLat" 
+        [longitude]="currentLng" [zoom]="zoom" (mapClick)="getRoute($event)">
+        
         <agm-marker *ngFor="let p of pointsOfInterest; let i = index" [animation]="p.animation" [latitude]="p.lat"
             [longitude]="p.lng" [iconUrl]="p.iconPath" (markerClick)="clickedMarker(p)"></agm-marker>
-        <agm-marker [latitude]="currentLat" [longitude]="currentLng"></agm-marker>
+        <agm-marker [latitude]="currentLat" 
+            [longitude]="currentLng"
+            [iconUrl]="currentLocationMarker"></agm-marker>
         <agm-direction
             *ngFor="let direction of directions" 
             [origin]="direction.origin" [destination]="direction.destination"></agm-direction>

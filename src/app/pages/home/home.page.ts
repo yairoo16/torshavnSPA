@@ -15,6 +15,7 @@ export class HomePage implements OnInit {
   s3BaseImageUrl = environment.s3Url;
   currentLat: number;
   currentLng: number;
+  currentLocationMarker = 'http://www.robotwoods.com/dev/misc/bluecircle.png';
   origin: any;
   directions: any[] = [];
   zoom = 15;
