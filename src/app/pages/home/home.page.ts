@@ -4,6 +4,7 @@ import { Marker } from 'src/app/models/marker';
 import { environment } from 'src/environments/environment';
 import { MarkerService } from 'src/app/services/marker.service';
 import { GeoLocationService } from 'src/app/services/geo-location.service';
+declare const google: any;
 
 @Component({
   selector: 'app-home',
@@ -11,11 +12,15 @@ import { GeoLocationService } from 'src/app/services/geo-location.service';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage implements OnInit {
-
+  map: any;
   s3BaseImageUrl = environment.s3Url;
   currentLat: number;
   currentLng: number;
   currentLocationMarker = 'http://www.robotwoods.com/dev/misc/bluecircle.png';
+  watchId: any;
+  startLat: number;
+  startLng: number;
+  // currentLocationMarker: any;
   origin: any;
   directions: any[] = [];
   zoom = 15;
@@ -55,10 +60,20 @@ export class HomePage implements OnInit {
     //     this.latitude = +pos.coords.latitude;
     //   });
     // }
-    this.geoLocationService.getPosition().subscribe(
+    this.watchId = this.geoLocationService.watchCurrentPosition().subscribe(
       (pos: Position) => {
         this.currentLat = +(pos.coords.latitude);
         this.currentLng = +(pos.coords.longitude);
+        console.log('Lat:' + this.currentLat + ' Long:' + this.currentLng + ' accuracy: ' + pos.coords.accuracy );
+      }
+    );
+  }
+
+  resetCurrentLocation() {
+    this.geoLocationService.resetCurrentLocation().subscribe(
+      (pos: Position) => {
+        this.startLat = +(pos.coords.latitude);
+        this.startLng = +(pos.coords.longitude);
         console.log('Lat:' + this.currentLat + ' Long:' + this.currentLng + ' accuracy: ' + pos.coords.accuracy );
       }
     );
@@ -80,6 +95,20 @@ export class HomePage implements OnInit {
         renderOptions: { polylineOptions: { strokeColor: '#f00' } },
       });
     }
+  }
+
+  mapReady(event: any) {
+    // this.currentLocationMarker = google.maps.SymbolPath.CIRCLE;
+    this.resetCurrentLocation();
+    this.map = event;
+    // const input = document.getElementById('Map-Search');
+    // this.searchBox = new google.maps.places.SearchBox(input);
+    this.map.controls[google.maps.ControlPosition.TOP_RIGHT].push(document.getElementById('Settings'));
+  }
+
+  centerChanged() {
+    console.log('Center changed');
+    
   }
 
 }

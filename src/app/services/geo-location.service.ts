@@ -8,7 +8,7 @@ export class GeoLocationService {
   coordinates: any;
   constructor() { }
 
-  public getPosition(): Observable<Position> {
+  public watchCurrentPosition(): Observable<Position> {
     return new Observable<Position>(
       (observer) => {
       navigator.geolocation.watchPosition(
@@ -25,4 +25,26 @@ export class GeoLocationService {
       );
     });
   }
+
+  public resetCurrentLocation(): Observable<Position> {
+    return new Observable<Position>(
+      (observer) => {
+        navigator.geolocation.getCurrentPosition(
+          (pos: Position) => {
+            observer.next(pos);
+          },
+          (error) => {
+            observer.next(null);
+          },
+          {
+            enableHighAccuracy: true,
+            // timeout: 5000
+          }
+        );
+      });
+  }
+
+  // pubilc stopWatchingCurrentPosition() {
+  //   navigator.geolocation.clearWatch();
+  // }
 }
