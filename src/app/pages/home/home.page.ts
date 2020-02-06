@@ -69,6 +69,7 @@ export class HomePage implements OnInit {
     );
   }
 
+  // meant to center location
   resetCurrentLocation() {
     this.geoLocationService.resetCurrentLocation().subscribe(
       (pos: Position) => {
