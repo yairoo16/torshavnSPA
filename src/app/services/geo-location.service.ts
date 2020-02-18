@@ -20,13 +20,13 @@ export class GeoLocationService {
         },
         {
           enableHighAccuracy: true,
-          // timeout: 5000
+          timeout: 5000
         }
       );
     });
   }
 
-  public resetCurrentLocation(): Observable<Position> {
+  public getCurrentLocation(): Observable<Position> {
     return new Observable<Position>(
       (observer) => {
         navigator.geolocation.getCurrentPosition(
@@ -38,7 +38,7 @@ export class GeoLocationService {
           },
           {
             enableHighAccuracy: true,
-            // timeout: 5000
+            timeout: 5000
           }
         );
       });

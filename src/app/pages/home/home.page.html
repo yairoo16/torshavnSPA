@@ -8,11 +8,11 @@
 </ion-header>
 <ion-content padding>
     <agm-map [latitude]="currentLat" 
-        [longitude]="currentLng" [zoom]="zoom" (mapReady)="mapReady($event)" (idle)="centerChanged()">
+        [longitude]="currentLng" [zoom]="zoom" (mapReady)="mapReady($event)">
 
-        <!-- <button id="Settings" type="button" (click)="resetCurrentLocation()">
+        <button ion-button id="Settings" type="button" (click)="recenterMap()">
             <ion-icon name="locate"></ion-icon>
-        </button> -->
+        </button>
             
         <agm-marker *ngFor="let p of pointsOfInterest; let i = index" [animation]="p.animation" [latitude]="p.lat"
             [longitude]="p.lng" [iconUrl]="p.iconPath" (markerClick)="clickedMarker(p)"></agm-marker>

@@ -4,6 +4,8 @@ import { Marker } from 'src/app/models/marker';
 import { environment } from 'src/environments/environment';
 import { MarkerService } from 'src/app/services/marker.service';
 import { GeoLocationService } from 'src/app/services/geo-location.service';
+import { ActivatedRoute, Router } from '@angular/router';
+
 declare const google: any;
 
 @Component({
@@ -18,8 +20,6 @@ export class HomePage implements OnInit {
   currentLng: number;
   currentLocationMarker = 'http://www.robotwoods.com/dev/misc/bluecircle.png';
   watchId: any;
-  startLat: number;
-  startLng: number;
   // currentLocationMarker: any;
   origin: any;
   directions: any[] = [];
@@ -28,13 +28,23 @@ export class HomePage implements OnInit {
   pointsOfInterest: Marker[];
   selectedPointOfInterest: Marker;
 
-  constructor(private markerService: MarkerService, private geoLocationService: GeoLocationService) {
+  constructor(private route: ActivatedRoute,
+              private router: Router,
+              private markerService: MarkerService,
+              private geoLocationService: GeoLocationService) {
 
   }
 
   ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+      if (this.router.getCurrentNavigation().extras.state) {
+        this.currentLat = this.router.getCurrentNavigation().extras.state.coordinates.lat;
+        this.currentLng = this.router.getCurrentNavigation().extras.state.coordinates.lng;
+      } else {
+        this.watchCurrentLocation();
+      }
+    });
     this.populateMarkers();
-    this.getCurrentLocation();
   }
 
   populateMarkers() {
@@ -53,7 +63,17 @@ export class HomePage implements OnInit {
     this.selectedPointOfInterest = marker;
   }
 
-  getCurrentLocation() {
+  getCurrentlocation() {
+    this.watchId = this.geoLocationService.getCurrentLocation().subscribe(
+      (pos: Position) => {
+        this.currentLat = +(pos.coords.latitude);
+        this.currentLng = +(pos.coords.longitude);
+        console.log('Lat:' + this.currentLat + ' Long:' + this.currentLng + ' accuracy: ' + pos.coords.accuracy );
+      }
+    );
+  }
+
+  watchCurrentLocation() {
     // if (navigator) {
     //   navigator.geolocation.getCurrentPosition( pos => {
     //     this.longitude = +pos.coords.longitude;
@@ -69,16 +89,21 @@ export class HomePage implements OnInit {
     );
   }
 
-  // meant to center location
-  resetCurrentLocation() {
-    this.geoLocationService.resetCurrentLocation().subscribe(
-      (pos: Position) => {
-        this.startLat = +(pos.coords.latitude);
-        this.startLng = +(pos.coords.longitude);
-        console.log('Lat:' + this.currentLat + ' Long:' + this.currentLng + ' accuracy: ' + pos.coords.accuracy );
-      }
-    );
+  recenterMap() {
+    console.log('recenter map is clicked');
+    this.getCurrentlocation();
   }
+
+  // meant to center location
+  // resetCurrentLocation() {
+  //   this.geoLocationService.resetCurrentLocation().subscribe(
+  //     (pos: Position) => {
+  //       this.startLat = +(pos.coords.latitude);
+  //       this.startLng = +(pos.coords.longitude);
+  //       console.log('Lat:' + this.currentLat + ' Long:' + this.currentLng + ' accuracy: ' + pos.coords.accuracy );
+  //     }
+  //   );
+  // }
 
   getRoute(event) {
     if (this.directions.length === 0) {
@@ -100,7 +125,7 @@ export class HomePage implements OnInit {
 
   mapReady(event: any) {
     // this.currentLocationMarker = google.maps.SymbolPath.CIRCLE;
-    this.resetCurrentLocation();
+    // this.watchCurrentLocation();
     this.map = event;
     // const input = document.getElementById('Map-Search');
     // this.searchBox = new google.maps.places.SearchBox(input);
@@ -109,7 +134,7 @@ export class HomePage implements OnInit {
 
   centerChanged() {
     console.log('Center changed');
-    
+
   }
 
 }
