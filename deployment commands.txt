@@ -1,0 +1,11 @@
+#Build for production
+ng build --prod
+
+#sync  
+ionic capacitor sync android
+
+#open android
+ionic capacitor open android
+
+in android studio go to Build -> Generate Signed Bundle / Apk -> 
+select APK -> fill out password key info -> select release -> finish
