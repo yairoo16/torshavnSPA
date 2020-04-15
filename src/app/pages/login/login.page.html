@@ -8,13 +8,13 @@
   <form #form="ngForm" (ngSubmit)="login(form.value)" novalidate>
     <ion-list>
       <ion-item>
-        <ion-label position="stacked">Username</ion-label>
-        <ion-input type="text" name="username" ngModel required #username="ngModel"
-                   [class.invalid]="username.errors && username.dirty"></ion-input>
+        <ion-label position="stacked">Email</ion-label>
+        <ion-input type="text" name="email" ngModel required #email="ngModel"
+                   [class.invalid]="email.errors && email.dirty"></ion-input>
       </ion-item>
-      <ion-item class="error-message" *ngIf="username.errors?.required && username.dirty">
+      <ion-item class="error-message" *ngIf="email.errors?.required && email.dirty">
         <ion-label>
-          Username is required
+          email is required
         </ion-label>
       </ion-item>
 

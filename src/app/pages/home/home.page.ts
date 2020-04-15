@@ -16,8 +16,8 @@ declare const google: any;
 export class HomePage implements OnInit {
   map: any;
   s3BaseImageUrl = environment.s3Url;
-  currentLat: number;
-  currentLng: number;
+  lat: number;
+  lng: number;
   currentLocationMarker = 'http://www.robotwoods.com/dev/misc/bluecircle.png';
   watchId: any;
   // currentLocationMarker: any;
@@ -33,17 +33,11 @@ export class HomePage implements OnInit {
               private markerService: MarkerService,
               private geoLocationService: GeoLocationService) {
 
+
   }
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
-      if (this.router.getCurrentNavigation().extras.state) {
-        this.currentLat = this.router.getCurrentNavigation().extras.state.coordinates.lat;
-        this.currentLng = this.router.getCurrentNavigation().extras.state.coordinates.lng;
-      } else {
-        this.watchCurrentLocation();
-      }
-    });
+    this.watchCurrentLocation();
     this.populateMarkers();
   }
 
@@ -66,27 +60,29 @@ export class HomePage implements OnInit {
   getCurrentlocation() {
     this.watchId = this.geoLocationService.getCurrentLocation().subscribe(
       (pos: Position) => {
-        this.currentLat = +(pos.coords.latitude);
-        this.currentLng = +(pos.coords.longitude);
-        console.log('Lat:' + this.currentLat + ' Long:' + this.currentLng + ' accuracy: ' + pos.coords.accuracy );
+        this.lat = +(pos.coords.latitude);
+        this.lng = +(pos.coords.longitude);
+        console.log('Lat:' + this.lat + ' Long:' + this.lng + ' accuracy: ' + pos.coords.accuracy );
       }
     );
   }
 
   watchCurrentLocation() {
-    // if (navigator) {
-    //   navigator.geolocation.getCurrentPosition( pos => {
-    //     this.longitude = +pos.coords.longitude;
-    //     this.latitude = +pos.coords.latitude;
-    //   });
-    // }
-    this.watchId = this.geoLocationService.watchCurrentPosition().subscribe(
-      (pos: Position) => {
-        this.currentLat = +(pos.coords.latitude);
-        this.currentLng = +(pos.coords.longitude);
-        console.log('Lat:' + this.currentLat + ' Long:' + this.currentLng + ' accuracy: ' + pos.coords.accuracy );
+    if (navigator.geolocation) {
+        this.watchId = navigator.geolocation.watchPosition(
+          (pos: Position) => {
+            this.lat = +(pos.coords.latitude);
+            this.lng = +(pos.coords.longitude);
+            console.log('Lat:' + this.lat + ' Long:' + this.lng + ' accuracy: ' + pos.coords.accuracy + ' timestamp: ' + Date.now());
+          },
+          () => {
+            console.log('Position is not available');
+          },
+          {
+            enableHighAccuracy: true
+          }
+        );
       }
-    );
   }
 
   recenterMap() {
@@ -108,7 +104,7 @@ export class HomePage implements OnInit {
   getRoute(event) {
     if (this.directions.length === 0) {
       this.directions.push({
-        origin: { lat: this.currentLat, lng: this.currentLng },
+        origin: { lat: this.lat, lng: this.lng },
         destination: { lat: event.coords.lat, lng: event.coords.lng },
         renderOptions: { polylineOptions: { strokeColor: '#f00' } },
       });
@@ -123,14 +119,14 @@ export class HomePage implements OnInit {
     }
   }
 
-  mapReady(event: any) {
-    // this.currentLocationMarker = google.maps.SymbolPath.CIRCLE;
-    // this.watchCurrentLocation();
-    this.map = event;
-    // const input = document.getElementById('Map-Search');
-    // this.searchBox = new google.maps.places.SearchBox(input);
-    this.map.controls[google.maps.ControlPosition.TOP_RIGHT].push(document.getElementById('Settings'));
-  }
+  // mapReady(event: any) {
+  //   // this.currentLocationMarker = google.maps.SymbolPath.CIRCLE;
+  //   // this.watchCurrentLocation();
+  //   this.map = event;
+  //   // const input = document.getElementById('Map-Search');
+  //   // this.searchBox = new google.maps.places.SearchBox(input);
+  //   this.map.controls[google.maps.ControlPosition.TOP_RIGHT].push(document.getElementById('Settings'));
+  // }
 
   centerChanged() {
     console.log('Center changed');

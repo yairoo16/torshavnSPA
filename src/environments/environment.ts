@@ -4,8 +4,9 @@
 
 export const environment = {
   production: false,
-  serverURL: 'http://localhost:8080/api/',
-  whitelistedDomains: ['localhost:8080'],
+  // serverURL: 'http://localhost:8080/api/',
+  // whitelistedDomains: ['localhost:8080'],
+  serverURL: 'http://127.0.0.1:8000/api/',
   googleMapsApiKey: 'AIzaSyCEroEM0m4QzyhQcqeK2GvCc0qDlCIzcAA',
   s3Url: 'https://torhavn-maps.s3.us-east-2.amazonaws.com/images/'
 };

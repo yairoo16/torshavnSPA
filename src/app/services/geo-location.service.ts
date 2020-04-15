@@ -15,12 +15,11 @@ export class GeoLocationService {
         (pos: Position) => {
           observer.next(pos);
         },
-        (error) => {
-          observer.next(null);
+        () => {
+          console.log('Position is not available');
         },
         {
-          enableHighAccuracy: true,
-          timeout: 5000
+          enableHighAccuracy: true
         }
       );
     });
@@ -37,8 +36,7 @@ export class GeoLocationService {
             observer.next(null);
           },
           {
-            enableHighAccuracy: true,
-            timeout: 5000
+            enableHighAccuracy: true
           }
         );
       });

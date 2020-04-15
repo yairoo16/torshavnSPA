@@ -11,7 +11,7 @@ import { finalize } from 'rxjs/operators';
 })
 export class RegisterPage implements OnInit {
 
-  @ViewChild('username')
+  @ViewChild('email')
   usernameModel: NgModel;
 
   constructor(private navCtrl: NavController,

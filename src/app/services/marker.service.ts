@@ -12,6 +12,7 @@ export class MarkerService {
   constructor(private httpClient: HttpClient) { }
 
   getMarkers(): Observable<Marker[]> {
-    return this.httpClient.get<Marker[]>(`${environment.serverURL}marker/historicmarkers`);
+    // return this.httpClient.get<Marker[]>(`${environment.serverURL}marker/historicmarkers`);
+    return this.httpClient.get<Marker[]>(`${environment.serverURL}marker/`);
   }
 }

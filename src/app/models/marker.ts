@@ -4,8 +4,8 @@ export interface Marker {
     lng: number;
     draggable: boolean;
     animation: string;
-    imagePath: string;
+    image_path: string;
     label: string;
     description: string;
-    iconPath: string;
+    icon_path: string;
 }

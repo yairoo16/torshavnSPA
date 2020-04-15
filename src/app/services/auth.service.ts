@@ -11,7 +11,7 @@ import { environment } from '../../environments/environment';
 })
 export class AuthService {
 
-  private readonly jwtTokenName = 'jwt_token';
+  private readonly jwtTokenName = 'token';
 
   private authUser = new ReplaySubject<any>(1);
   public authUserObservable = this.authUser.asObservable();
@@ -21,16 +21,18 @@ export class AuthService {
               private jwtHelper: JwtHelperService) { }
 
   getIsLoggedIn() {
-    const token = localStorage.getItem('jwt_token');
+    // const token = localStorage.getItem('jwt_token');
+    const token = localStorage.getItem('token');
     return !this.jwtHelper.isTokenExpired(token);
   }
 
   get token() {
-    return localStorage.getItem('jtw_token');
+    // return localStorage.getItem('jtw_token');
+    return localStorage.getItem('token');
   }
 
   login(values: any): Observable<string> {
-    return this.httpClient.post(`${environment.serverURL}login`, values, {responseType: 'text'})
+    return this.httpClient.post(`${environment.serverURL}login/`, values, {responseType: 'text'})
       .pipe(tap(jwt => {
         this.handleJwtResponse(jwt);
       }
@@ -45,7 +47,7 @@ export class AuthService {
 
   signup(values: any): Observable<string> {
     // return this.httpClient.post(`${environment.serverURL}/register`, values);
-    return this.httpClient.post(`${environment.serverURL}register`, values, {responseType: 'text'})
+    return this.httpClient.post(`${environment.serverURL}user/`, values, {responseType: 'text'})
       .pipe(tap(jwt => {
         if (jwt !== 'EXISTS') {
           return this.handleJwtResponse(jwt);

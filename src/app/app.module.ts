@@ -18,7 +18,7 @@ import { MapModalComponent } from './shared/pickers/map-modal/map-modal.componen
 import { RequestInterceptor } from './interceptors/request.interceptor';
 
 export function tokenGetter() {
-  return localStorage.getItem('jwt_token');
+  return localStorage.getItem('token');
 }
 
 @NgModule({

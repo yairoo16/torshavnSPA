@@ -7,29 +7,29 @@
     </ion-toolbar>
 </ion-header>
 <ion-content padding>
-    <agm-map [latitude]="currentLat" 
-        [longitude]="currentLng" [zoom]="zoom" (mapReady)="mapReady($event)">
+    <agm-map [latitude]="lat" 
+        [longitude]="lng" [zoom]="zoom" >
 
         <button ion-button id="Settings" type="button" (click)="recenterMap()">
             <ion-icon name="locate"></ion-icon>
         </button>
             
         <agm-marker *ngFor="let p of pointsOfInterest; let i = index" [animation]="p.animation" [latitude]="p.lat"
-            [longitude]="p.lng" [iconUrl]="p.iconPath" (markerClick)="clickedMarker(p)"></agm-marker>
+            [longitude]="p.lng" [iconUrl]="p.icon_path" (markerClick)="clickedMarker(p)"></agm-marker>
 
         <agm-marker 
-            [latitude]="currentLat" 
-            [longitude]="currentLng"
-            [iconUrl]="currentLocationMarker"></agm-marker>
+            [latitude]="lat" 
+            [longitude]="lng"
+            ></agm-marker>
 
-        <agm-direction
+        <!-- <agm-direction
             *ngFor="let direction of directions" 
-            [origin]="direction.origin" [destination]="direction.destination"></agm-direction>
+            [origin]="direction.origin" [destination]="direction.destination"></agm-direction> -->
     </agm-map>
     <ion-grid *ngIf="selectedPointOfInterest !== undefined">
         <ion-row >
             <ion-col size-sm="6" offset-sm="3" no-padding>
-                <ion-img [src]="s3BaseImageUrl + selectedPointOfInterest.imagePath"></ion-img>
+                <ion-img [src]="s3BaseImageUrl + selectedPointOfInterest.image_path"></ion-img>
             </ion-col>
         </ion-row>
         <ion-row>
