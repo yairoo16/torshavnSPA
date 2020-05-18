@@ -35,9 +35,20 @@ export class RegisterPage implements OnInit {
       .signup(value)
       .pipe(finalize(() => loading.dismiss()))
       .subscribe(
-        jwt => {
-          this.navCtrl.navigateRoot(['home'], { replaceUrl: true });
-          this.showSuccesToast(jwt);
+        response => {
+          const status = this.handleSignupResponse(response);
+          if (status === 'OK') {
+            this.authService
+            .login(value)
+            .pipe(finalize(() => loading.dismiss()))
+            .subscribe(
+              jwt => {
+                this.navCtrl.navigateRoot(['home'], { replaceUrl: true });
+                this.showSuccesToast(jwt);
+              },
+              err => this.handleError(err)
+            );
+          }
         },
         err => this.handleError(err));
         // jwt => this.showSuccesToast(jwt),
@@ -77,6 +88,16 @@ export class RegisterPage implements OnInit {
 
       this.usernameModel.control.setErrors({usernameTaken: true});
     }
+}
+
+private handleSignupResponse(status: string): string {
+  const response = JSON.parse(status);
+  const value = response['status'];
+
+  //localStorage.setItem(this.jwtTokenName, tokenValue);
+  //this.authUser.next(jwt);
+
+  return value;
 }
 
 }

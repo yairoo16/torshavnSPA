@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   NavController,
   LoadingController,
@@ -7,6 +7,7 @@ import {
 import { Router, NavigationExtras } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { finalize } from 'rxjs/operators';
+import { NgModel } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -14,6 +15,10 @@ import { finalize } from 'rxjs/operators';
   styleUrls: ['./login.page.scss']
 })
 export class LoginPage implements OnInit {
+
+  @ViewChild('email')
+  usernameModel: NgModel;
+
   constructor(
     private navCtrl: NavController,
     private loadingCtrl: LoadingController,
@@ -39,8 +44,9 @@ export class LoginPage implements OnInit {
       .login(value)
       .pipe(finalize(() => loading.dismiss()))
       .subscribe(
-        _ => {
+        jwt => {
           this.navCtrl.navigateRoot(['home'], { replaceUrl: true });
+          this.showSuccesToast(jwt);
         },
         err => this.handleError(err)
       );
@@ -61,5 +67,28 @@ export class LoginPage implements OnInit {
     });
 
     toast.present();
+  }
+
+  private async showSuccesToast(jwt) {
+    if (jwt !== 'EXISTS') {
+      const toast = await this.toastCtrl.create({
+        message: 'Sign up successful',
+        duration: 3000,
+        position: 'bottom'
+      });
+
+      toast.present();
+      this.navCtrl.navigateRoot(['home'], {replaceUrl: true});
+    } else {
+      const toast = await this.toastCtrl.create({
+        message: 'Username already registered',
+        duration: 3000,
+        position: 'bottom'
+      });
+
+      toast.present();
+
+      this.usernameModel.control.setErrors({usernameTaken: true});
+    }
   }
 }

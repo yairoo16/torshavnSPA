@@ -48,11 +48,12 @@ export class AuthService {
   signup(values: any): Observable<string> {
     // return this.httpClient.post(`${environment.serverURL}/register`, values);
     return this.httpClient.post(`${environment.serverURL}user/`, values, {responseType: 'text'})
-      .pipe(tap(jwt => {
-        if (jwt !== 'EXISTS') {
-          return this.handleJwtResponse(jwt);
+      .pipe(tap(status => {
+        if (status !== 'EXISTS') {
+          // return this.handleJwtResponse(jwt);
+          return this.handleSignupResponse(status);
         }
-        return jwt;
+        return status;
       }));
   }
 
@@ -64,5 +65,15 @@ export class AuthService {
     this.authUser.next(jwt);
 
     return jwt;
+  }
+
+  private handleSignupResponse(status: string): string {
+    const response = JSON.parse(status);
+    const value = response['status'];
+
+    //localStorage.setItem(this.jwtTokenName, tokenValue);
+    //this.authUser.next(jwt);
+
+    return value;
   }
 }

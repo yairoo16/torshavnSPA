@@ -8,7 +8,9 @@ export const environment = {
   // whitelistedDomains: ['localhost:8080'],
   serverURL: 'http://127.0.0.1:8000/api/',
   googleMapsApiKey: 'AIzaSyCEroEM0m4QzyhQcqeK2GvCc0qDlCIzcAA',
-  s3Url: 'https://torhavn-maps.s3.us-east-2.amazonaws.com/images/'
+  // s3Url: 'https://torhavn-maps.s3.us-east-2.amazonaws.com/images/',
+  s3Url: 'https://cloud-cube.s3.amazonaws.com/r98sunmzllfr/public/',
+  cloudCubeApiKey: '4hVheYo/JLpRr5Ba35Uhserl9y8ZRpG/4O6UqJmE'
 };
 
 /*
