@@ -47,14 +47,7 @@ export class AuthService {
 
   signup(values: any): Observable<string> {
     // return this.httpClient.post(`${environment.serverURL}/register`, values);
-    return this.httpClient.post(`${environment.serverURL}user/`, values, {responseType: 'text'})
-      .pipe(tap(status => {
-        if (status !== 'EXISTS') {
-          // return this.handleJwtResponse(jwt);
-          return this.handleSignupResponse(status);
-        }
-        return status;
-      }));
+    return this.httpClient.post(`${environment.serverURL}user/`, values, {responseType: 'text'});
   }
 
   private handleJwtResponse(jwt: string): string {
@@ -65,15 +58,5 @@ export class AuthService {
     this.authUser.next(jwt);
 
     return jwt;
-  }
-
-  private handleSignupResponse(status: string): string {
-    const response = JSON.parse(status);
-    const value = response['status'];
-
-    //localStorage.setItem(this.jwtTokenName, tokenValue);
-    //this.authUser.next(jwt);
-
-    return value;
   }
 }

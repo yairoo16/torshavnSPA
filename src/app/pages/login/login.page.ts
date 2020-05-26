@@ -72,7 +72,7 @@ export class LoginPage implements OnInit {
   private async showSuccesToast(jwt) {
     if (jwt !== 'EXISTS') {
       const toast = await this.toastCtrl.create({
-        message: 'Sign up successful',
+        message: 'Login successful',
         duration: 3000,
         position: 'bottom'
       });
