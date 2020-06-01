@@ -6,23 +6,28 @@ import { Observable } from 'rxjs';
 })
 export class GeoLocationService {
   coordinates: any;
+  watchId: any;
   constructor() { }
 
   public watchCurrentPosition(): Observable<Position> {
     return new Observable<Position>(
       (observer) => {
-      navigator.geolocation.watchPosition(
-        (pos: Position) => {
-          observer.next(pos);
-        },
-        () => {
-          console.log('Position is not available');
-        },
-        {
-          enableHighAccuracy: true
+        if (navigator.geolocation) {
+          this.watchId = navigator.geolocation.watchPosition(
+            (pos: Position) => {
+                observer.next(pos);
+              },
+              (error) => {
+                console.log('Position is not available: ' + error.message);
+              },
+              {
+                enableHighAccuracy: true,
+                timeout: 10000
+              }
+            );
         }
-      );
-    });
+      },
+    );
   }
 
   public getCurrentLocation(): Observable<Position> {

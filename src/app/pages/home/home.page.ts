@@ -67,22 +67,32 @@ export class HomePage implements OnInit {
     );
   }
 
+  // watchCurrentLocation() {
+  //   if (navigator.geolocation) {
+  //       this.watchId = navigator.geolocation.watchPosition(
+  //         (pos: Position) => {
+  //           this.lat = +(pos.coords.latitude);
+  //           this.lng = +(pos.coords.longitude);
+  //           console.log('Lat:' + this.lat + ' Long:' + this.lng + ' accuracy: ' + pos.coords.accuracy + ' timestamp: ' + Date.now());
+  //         },
+  //         () => {
+  //           console.log('Position is not available');
+  //         },
+  //         {
+  //           enableHighAccuracy: true
+  //         }
+  //       );
+  //     }
+  // }
+
   watchCurrentLocation() {
-    if (navigator.geolocation) {
-        this.watchId = navigator.geolocation.watchPosition(
-          (pos: Position) => {
-            this.lat = +(pos.coords.latitude);
-            this.lng = +(pos.coords.longitude);
-            console.log('Lat:' + this.lat + ' Long:' + this.lng + ' accuracy: ' + pos.coords.accuracy + ' timestamp: ' + Date.now());
-          },
-          () => {
-            console.log('Position is not available');
-          },
-          {
-            enableHighAccuracy: true
-          }
-        );
+    this.watchId = this.geoLocationService.watchCurrentPosition().subscribe(
+      (pos: Position) => {
+        this.lat = +(pos.coords.latitude);
+        this.lng = +(pos.coords.longitude);
+        console.log('Lat:' + this.lat + ' Long:' + this.lng + ' accuracy: ' + pos.coords.accuracy + ' timestamp: ' + Date.now());
       }
+    );
   }
 
   recenterMap() {
